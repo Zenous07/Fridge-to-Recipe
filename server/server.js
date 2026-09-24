@@ -36,7 +36,19 @@ const RECIPE_SCHEMA = {
         required: ["id", "name", "amount", "unit", "isEssential"]
       }
     },
-    instructions: {
+    prepInstructions: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          stepNumber: { type: "INTEGER" },
+          instruction: { type: "STRING" },
+          timerMinutes: { type: "INTEGER" }
+        },
+        required: ["stepNumber", "instruction"]
+      }
+    },
+    cookInstructions: {
       type: "ARRAY",
       items: {
         type: "OBJECT",
@@ -49,7 +61,7 @@ const RECIPE_SCHEMA = {
       }
     }
   },
-  required: ["recipeId", "title", "prepTimeMinutes", "cookTimeMinutes", "servings", "difficulty", "ingredients", "instructions"]
+  required: ["recipeId", "title", "prepTimeMinutes", "cookTimeMinutes", "servings", "difficulty", "ingredients", "prepInstructions", "cookInstructions"]
 };
 
 app.post('/api/recipe', async (req, res) => {
@@ -60,7 +72,7 @@ app.post('/api/recipe', async (req, res) => {
       return res.status(400).json({ error: "Ingredients are required" });
     }
 
-    const prompt = `You are a culinary expert. Create a bachelor-friendly recipe using the following ingredients: ${ingredients}. You can include standard pantry staples like salt, pepper, oil, water if needed, but the core meal should rely on the provided ingredients. Return the recipe EXACTLY matching the provided JSON schema. Do NOT include markdown code blocks, just raw JSON.`;
+    const prompt = `You are a culinary expert. Create a bachelor-friendly recipe using the following ingredients: ${ingredients}. You can include standard pantry staples like salt, pepper, oil, water if needed, but the core meal should rely on the provided ingredients. Return the recipe EXACTLY matching the provided JSON schema. Separate the instructions into 'prepInstructions' (like chopping, marinating, preheating) and 'cookInstructions' (the actual cooking steps). Do NOT include markdown code blocks, just raw JSON.`;
 
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',

@@ -80,7 +80,10 @@ export default function RecipeCard({ recipe }) {
             </span>
             Instructions
           </h3>
-          <StepList instructions={recipe.instructions} />
+          <StepList 
+            prepInstructions={recipe.prepInstructions} 
+            cookInstructions={recipe.cookInstructions} 
+          />
         </div>
 
       </div>
