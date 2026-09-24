@@ -108,8 +108,27 @@ function App() {
           </div>
         )}
 
+        {/* Rejection State */}
+        {recipe && recipe.isSensibleRecipe === false && (
+          <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 text-center shadow-sm animate-in fade-in slide-in-from-bottom-4">
+            <div className="flex justify-center mb-4 text-orange-600">
+              <AlertCircle size={48} strokeWidth={1.5} />
+            </div>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">Culinary Abomination Detected!</h3>
+            <p className="text-slate-700 italic max-w-lg mx-auto">
+              "{recipe.sarcasticRejectionMessage}"
+            </p>
+            <button 
+              onClick={() => setRecipe(null)}
+              className="mt-6 text-sm font-medium px-4 py-2 bg-orange-100 text-orange-700 rounded-lg hover:bg-orange-200 transition-colors"
+            >
+              Try something edible
+            </button>
+          </div>
+        )}
+
         {/* Recipe Display */}
-        {recipe && <RecipeCard recipe={recipe} />}
+        {recipe && recipe.isSensibleRecipe !== false && <RecipeCard recipe={recipe} />}
 
       </div>
     </div>

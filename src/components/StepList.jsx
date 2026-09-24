@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, Circle, Clock, MessageSquare } from 'lucide-react';
+import StepTimer from './StepTimer';
 
 export default function StepList({ prepInstructions = [], cookInstructions = [] }) {
   const [completedPrep, setCompletedPrep] = useState(new Set());
@@ -55,10 +56,7 @@ export default function StepList({ prepInstructions = [], cookInstructions = [] 
         
         <div className="mt-3 flex items-center justify-between">
           {step.timerMinutes ? (
-            <div className="flex items-center text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg w-fit">
-              <Clock size={14} className="mr-2 text-slate-400" />
-              {step.timerMinutes} mins
-            </div>
+            <StepTimer initialMinutes={step.timerMinutes} />
           ) : <div></div>}
           
           <button className="text-xs font-medium text-slate-400 flex items-center hover:text-orange-600 transition-colors">
