@@ -75,10 +75,24 @@ We are using **React** heavily styled with **Tailwind CSS v4**.
 *   `components/StepList.jsx`: Renders both Preparation and Cooking instructions with progress bars and checkable states.
 *   `components/StepTimer.jsx`: An interactive, playable countdown timer component for steps that require specific cooking durations.
 
-### Backend (`/server/server.js`)
+### Backend (`/api/index.js`)
 The backend is intentionally minimal. Its primary responsibilities are:
 1.  **Security**: Holding the `GEMINI_API_KEY` server-side so it isn't bundled into the frontend code.
 2.  **Schema Enforcement**: We pass a strict `RECIPE_SCHEMA` to the Gemini API, ensuring the LLM returns structured JSON (not a conversational chat string). This allows our React frontend to map data directly to typed components safely.
+3.  **Vercel Serverless Ready**: By placing the backend inside the `/api` folder and exporting the Express app, Vercel automatically treats it as a highly scalable Serverless Function!
+
+---
+
+## 🌐 Deployment (Vercel)
+
+This app is fully optimized for a "Zero-Config" All-in-One deployment on **Vercel**. 
+
+1. Push this repository to GitHub.
+2. Import the project into your Vercel Dashboard.
+3. In the deployment settings, go to **Environment Variables** and add your `GEMINI_API_KEY`.
+4. Click **Deploy**.
+
+Vercel will automatically build the Vite frontend AND transform `/api/index.js` into a serverless function. You don't need a separate backend host!
 
 ---
 

@@ -22,7 +22,8 @@ function App() {
     const currentRequestId = requestIdRef.current;
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      // If we are in production (Vercel), use relative path. If local, use localhost:3001
+      const apiUrl = import.meta.env.PROD ? '' : 'http://localhost:3001';
       const response = await axios.post(`${apiUrl}/api/recipe`, {
         ingredients: ingredientsInput,
         requestId: currentRequestId
