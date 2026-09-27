@@ -22,7 +22,8 @@ function App() {
     const currentRequestId = requestIdRef.current;
 
     try {
-      const response = await axios.post('http://localhost:3001/api/recipe', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await axios.post(`${apiUrl}/api/recipe`, {
         ingredients: ingredientsInput,
         requestId: currentRequestId
       });
